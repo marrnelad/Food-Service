@@ -16,7 +16,7 @@
     "sequelize": "^4.31.2"
   },
   "scripts": {
-    "server": "nodemon server/index.js --exec babel-node --presets es2015",
+    "server": "nodemon server/app.js --exec babel-node --presets es2015",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
