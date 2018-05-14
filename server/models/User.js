@@ -30,12 +30,5 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
 
-    // User.associate = (models) => {
-    //   User.hasMany(models.UserAndOrder, {
-    //     foreignKey: 'todoId',
-    //     as: 'todoItems',
-    //   });
-    // };
-
     return User;
 };

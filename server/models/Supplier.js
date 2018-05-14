@@ -19,12 +19,5 @@ module.exports = (sequelize, DataTypes) => {
         }
     });
 
-    // Food.associate = (models) => {
-    //   Food.hasMany(models.UserAndOrder, {
-    //     foreignKey: 'todoId',
-    //     as: 'todoItems',
-    //   });
-    // };
-
     return Supplier;
 };
