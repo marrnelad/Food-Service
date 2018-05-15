@@ -15,7 +15,7 @@ export default new PassportLocalStrategy({
         phone: phone.trim(),
         email: email.trim(),
         password: password.trim()
-    }
+    };
 
     db.User
         .findOne({
@@ -32,7 +32,8 @@ export default new PassportLocalStrategy({
             }
 
             return done({
-                error: 'That email is already taken.'
+                error:
+                    'That email is already taken.'
             })
         })
         .catch(error => done(error));

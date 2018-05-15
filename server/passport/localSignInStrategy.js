@@ -1,6 +1,7 @@
-const PassportLocalStrategy = require('passport-local').Strategy;
-
 import db from '../models/index.js';
+
+
+const PassportLocalStrategy = require('passport-local').Strategy;
 
 export default new PassportLocalStrategy({
     usernameField: 'email',
