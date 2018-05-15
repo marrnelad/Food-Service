@@ -14,6 +14,10 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.UUID,
             allowNull: false
         },
+        idSupplier: {
+            type: DataTypes.UUID,
+            allowNull: false
+        },
         orderDate: {
             type: DataTypes.DATEONLY,
             allowNull: false,
@@ -22,11 +26,16 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        shippingAddress: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        }
     });
 
     UserAndOrder.associate = function(models) {
         UserAndOrder.belongsTo(models.Food, {foreignKey: 'idFood'});
         UserAndOrder.belongsTo(models.User, {foreignKey: 'idUser'});
+        UserAndOrder.belongsTo(models.Supplier, {foreignKey: 'idSupplier'});
     };
 
     return UserAndOrder;
