@@ -4,13 +4,20 @@ export function getUserOrders(req, res) {
 
     return db.UserAndOrder
         .findAll({
-            where: {
-                idUser: req.params.idUser
-            },
             include: [{
-                model: db.Food
+                model: db.Food,
+                where: { idUser: req.params.idUser}
             }],
+            includeIgnoreAttributes: false
         })
+        // .findAll({
+        //   where: {
+        //     idUser: req.params.idUser
+        //   },
+        //   include: [{
+        //     model: db.Food
+        //   }],
+        // })
         .then(function(orders) {
             if (orders) {
                 return res.status(200).send(orders);
@@ -25,16 +32,16 @@ export function getUserOrders(req, res) {
 }
 
 export function createOrder(req, res) {
-
-    req.body.foods.forEach((orderItem) => {
+    let foods = req.body;
+    foods.forEach((orderItem) => {
         return db.UserAndOrder
             .create({
-                idUser: req.params.idUser,
+                idUser: orderItem.idUser,
                 idFood: orderItem.uuid,
                 orderDate: orderItem.orderDate,
                 count: orderItem.count,
             })
-            .then(orderItem => {
+            .then( (orderItem) => {
                 if (!orderItem) {
                     return res.status(400).send({
                         message: 'Could not create order item.'
@@ -43,10 +50,8 @@ export function createOrder(req, res) {
 
                 return res.status(200);
             })
-            .catch(error => {
-                message: "Could not create order item."
-            });
-    })
+            .catch(error => res.status(400).send(error));
+    });
 }
 
 export function deleteOrder(req, res) {

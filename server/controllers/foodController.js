@@ -22,7 +22,8 @@ export function createFood(req, res) {
             title: req.body.title,
             description: req.body.description,
             available: req.body.available,
-            price: req.body.price
+            price: req.body.price,
+            photo:req.body.photo,
         })
         .then(food => {
             db.FoodAndSupplier

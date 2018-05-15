@@ -25,14 +25,17 @@ export function createSupplier(req, res) {
         .create({
             name: req.body.name,
             address: req.body.address,
-            phone: req.body.phone
+            phone: req.body.phone,
+            photo:req.body.photo,
         })
         .then(supplier =>
             res.send(supplier)
         )
-        .catch(error => {
-            message: "Could not create supplier."
-        });
+        .catch(error =>
+            res.send({
+                message: "Could not create supplier."
+            })
+        );
 }
 
 export function deleteSupplier(req, res) {
