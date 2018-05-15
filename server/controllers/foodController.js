@@ -59,3 +59,22 @@ export function getSuppliersFood(req, res) {
             });
         });
 }
+
+export function deleteFood(req, res) {
+
+    return db.Food
+        .findById(req.params.idFood)
+        .then(foodItem => {
+            if (!foodItem) {
+                return res.status(404).send({
+                    message: 'FoodItem Not Found',
+                });
+            }
+
+            return foodItem
+                .destroy()
+                .then(() => res.status(204).send())
+                .catch(error => res.status(400).send(error));
+        })
+        .catch(error => res.status(400).send(error));
+}
