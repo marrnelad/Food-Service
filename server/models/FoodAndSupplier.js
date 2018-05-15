@@ -1,31 +1,22 @@
-var Supplier = require('./Supplier.js');
-var Food = require('./Food.js');
-
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     const FoodAndSupplier = sequelize.define('FoodAndSupplier', {
         id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            autoIncrement: true,
+            defaultValue: DataTypes.UUIDV4,
             primaryKey: true
         },
         idSupplier: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Supplier,
-                key: 'id',
-            }
         },
         idFood: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            references: {
-                model: Food,
-                key: 'id',
-            }
         }
     });
-
+    FoodAndSupplier.associate = function(models) {
+        FoodAndSupplier.belongsTo(models.Food, {foreignKey: 'idFood'});
+    };
     return FoodAndSupplier;
 };

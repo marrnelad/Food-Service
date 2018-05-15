@@ -1,16 +1,16 @@
-var User = require('./User.js');
-var Food = require('./Food.js');
+import User from './User.js';
+import Food from './Food.js';
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     const UserAndOrder = sequelize.define('UserAndOrder', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
+            defaultValue: DataTypes.UUIDV4,
             allowNull: false,
-            autoIncrement: true,
             primaryKey: true
         },
         idUser: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: User,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             }
         },
         idFood: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.UUID,
             allowNull: false,
             references: {
                 model: Food,

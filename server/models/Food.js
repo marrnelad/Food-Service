@@ -1,4 +1,4 @@
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
     const Food = sequelize.define('Food', {
         id: {
             type: DataTypes.INTEGER,
@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         }
     });
-
+    Food.associate = function(models) {
+        Food.hasOne(models.FoodAndSupplier, {foreignKey: 'idFood',onDelete: 'CASCADE'});
+        };
     return Food;
 };
