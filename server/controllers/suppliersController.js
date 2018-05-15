@@ -36,3 +36,21 @@ export function createSupplier(req, res) {
             message: "Could not create supplier."
         });
 }
+export function deleteSupplier(req, res) {
+
+    return db.Supplier
+        .findById(req.params.idSupplier)
+        .then(supplier => {
+            if (!supplier) {
+                return res.status(404).send({
+                    message: 'Supplier Not Found',
+                });
+            }
+
+            return supplier
+                .destroy()
+                .then(() => res.status(204).send(supplier))
+                .catch(error => res.status(400).send(error));
+        })
+        .catch(error => res.status(400).send(error));
+}

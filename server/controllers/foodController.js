@@ -28,7 +28,7 @@ export function createFood(req, res) {
         .then(food => {
             db.FoodAndSupplier
                 .create({
-                    idFood: food.dataValues.id,
+                    idFood: food.dataValues.uuid,
                     idSupplier:req.params.idSupplier
                 })
                 .then(foodAndSupplierItem => {
@@ -52,7 +52,8 @@ export function getSuppliersFood(req, res) {
             include: [{
                 model: db.FoodAndSupplier,
                 where: { idSupplier: req.params.idSupplier}
-            }]
+            }],
+            includeIgnoreAttributes: false
         })
         .then(function(food) {
             if (food.length) {
@@ -78,7 +79,7 @@ export function deleteFood(req, res) {
 
             return foodItem
                 .destroy()
-                .then(() => res.status(204).send())
+                .then(() => res.status(204).send(foodItem))
                 .catch(error => res.status(400).send(error));
         })
         .catch(error => res.status(400).send(error));
