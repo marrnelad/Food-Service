@@ -1,3 +1,6 @@
+var User = require('./User.js');
+var Food = require('./Food.js');
+
 module.exports = (sequelize, DataTypes) => {
     const UserAndOrder = sequelize.define('UserAndOrder', {
         id: {
@@ -12,7 +15,6 @@ module.exports = (sequelize, DataTypes) => {
             references: {
                 model: User,
                 key: 'id',
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
             }
         },
         idFood: {
@@ -21,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
             references: {
                 model: Food,
                 key: 'id',
-                deferrable: Sequelize.Deferrable.INITIALLY_IMMEDIATE
             }
         },
         orderDate: {
