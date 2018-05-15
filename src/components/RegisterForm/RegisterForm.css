@@ -2,3 +2,10 @@
     width: 60%;
     margin: 0 auto;
 }
+.register-form legend {
+    margin-bottom: 0!important;
+    font-size: 1.2rem!important;
+}
+.form-group {
+    margin-bottom: 0.5rem!important;
+}

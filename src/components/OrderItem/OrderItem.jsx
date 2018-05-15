@@ -6,9 +6,9 @@ class OrderItem extends React.Component {
     render() {
 
         return (
-            <div class="cart-aside__item list-group-item list-group-item-action flex-column align-items-start active">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1">List group item heading</h5>
+            <div className="cart-aside__item list-group-item list-group-item-action flex-column align-items-start active">
+                <div className="d-flex w-100 justify-content-between">
+                    <h5 className="mb-1">List group item heading</h5>
                     <small>10.20$</small>
                 </div>
                 <div className="cart-item-footer">
