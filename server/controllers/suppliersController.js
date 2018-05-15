@@ -2,7 +2,8 @@ import db from '../models/index.js';
 
 export function getSuppliers(req, res) {
 
-    return db.Supplier.findAll()
+    return db.Supplier
+        .findAll()
         .then(function(suppliers) {
             if (suppliers.length) {
                 return res.send(suppliers);
@@ -22,7 +23,7 @@ export function getSuppliers(req, res) {
 export function createSupplier(req, res) {
 
     return db.Supplier
-        .build({
+        .create({
             name: req.body.name,
             address: req.body.address,
             phone: req.body.phone

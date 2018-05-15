@@ -2,7 +2,8 @@ import db from '../models/index.js';
 
 export function getFood(req, res) {
 
-    return db.Food.findAll()
+    return db.Food
+        .findAll()
         .then(function(food) {
             if (food.length) {
                 return res.send(food);
@@ -11,17 +12,13 @@ export function getFood(req, res) {
                 message: "Could not find any food."
             });
         })
-        .catch(function(error) {
-            return res.send({
-                message: "Error retrieving food."
-            });
-        });
+        .catch(error => res.status(400).send(error));
 }
 
 export function createFood(req, res) {
 
     return db.Food
-        .build({
+        .create({
             title: req.body.title,
             description: req.body.description,
             available: req.body.available,
@@ -29,21 +26,34 @@ export function createFood(req, res) {
         })
         .save()
         .then(food => {
-            res.send(food);
+            db.FoodAndSupplier
+                .create({
+                    idFood: food.dataValues.id,
+                    idSupplier:req.params.idSupplier
+                })
+                .then(foodAndSupplierItem => {
+                    if (!foodAndSupplierItem) {
+                        return res.status(400).send({
+                            message: 'Could not create FoodAndSupplierItem'
+                        });
+                    }
+                })
+                .catch(error => res.status(400).send(error));
+
+            return res.status(200).send(food);
         })
-        .catch(error => {
-            message: "Could not create food."
-        });
+        .catch(error => res.status(400).send(error));
 }
 
 export function getSuppliersFood(req, res) {
 
-    return db.Food.findAll({
-        include: [{
-            model: db.FoodAndSupplier,
-            where: { idSupplier: req.params.idSupplier}
-        }]
-    })
+    return db.Food
+        .findAll({
+            include: [{
+                model: db.FoodAndSupplier,
+                where: { idSupplier: req.params.idSupplier}
+            }]
+        })
         .then(function(food) {
             if (food.length) {
                 return res.send(food);
@@ -52,12 +62,7 @@ export function getSuppliersFood(req, res) {
                 message: "Could not find any food."
             });
         })
-        .catch(function(error) {
-
-            return res.send({
-                message: "Error retrieving food."
-            });
-        });
+        .catch(error => {res.status(400).send(error)})
 }
 
 export function deleteFood(req, res) {
