@@ -22,15 +22,15 @@ if(localStorage.token) {
     store.dispatch(setCurrentUser(jwt.decode(localStorage.token)));
 }
 const Routes = () => (
-    <Provider store={store}>
-        <Router history={history}>
-            <App>
-                <Header />
-                <Main />
-                <Footer />
-            </App>
-        </Router>
-    </Provider>
+  <Provider store={store}>
+    <Router history={history}>
+      <App>
+        <Header />
+        <Main />
+        <Footer />
+      </App>
+    </Router>
+  </Provider>
 );
 
 export default Routes;
