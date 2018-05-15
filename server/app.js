@@ -1,16 +1,25 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import Sequelize from 'sequelize';
-import apiRoutes from './routes/apiRoutes.js';
+import passport from 'passport';
 
-const sequelize = new Sequelize('postgres://postgres:Egor-1997@localhost:5432/eda');
+import localSignUpStrategy from './passport/localSignUpStrategy.js';
+import localSignInStrategy from './passport/localSignInStrategy.js';
+
+import apiRouter from './routes/apiRouter.js';
+import authRouter from './routes/authRouter.js';
 
 const app = express();
 
 app.use( bodyParser.urlencoded({ extended: true }) );
 app.use( bodyParser.json() );
-app.use('/api', apiRoutes);
 
-app.listen(3001, () => {
-    console.log('Server is running on port 3000');
+app.use(passport.initialize());
+passport.use('localSignUp', localSignUpStrategy);
+passport.use('localSignIn', localSignInStrategy);
+
+app.use('/api', apiRouter);
+app.use('/', authRouter);
+
+app.listen( 5000, () => {
+    console.log('Server is running on port 5000');
 });

@@ -5,7 +5,7 @@ export function getFood(req, res) {
     return db.Food
         .findAll()
         .then(function(food) {
-            if (food.length) {
+            if (food.length > 0) {
                 return res.send(food);
             }
             return res.send({
@@ -24,12 +24,11 @@ export function createFood(req, res) {
             available: req.body.available,
             price: req.body.price
         })
-        .save()
         .then(food => {
             db.FoodAndSupplier
                 .create({
                     idFood: food.dataValues.uuid,
-                    idSupplier:req.params.idSupplier
+                    idSupplier: req.params.idSupplier
                 })
                 .then(foodAndSupplierItem => {
                     if (!foodAndSupplierItem) {
@@ -63,7 +62,52 @@ export function getSuppliersFood(req, res) {
                 message: "Could not find any food."
             });
         })
-        .catch(error => {res.status(400).send(error)})
+        .catch(error => {
+            return res.status(400).send(error);
+        })
+}
+
+export function getAvailableSuppliersFood(req, res) {
+
+    return db.Food
+        .findAll({
+            include: [{
+                model: db.FoodAndSupplier,
+                where: { idSupplier: req.params.idSupplier}
+            }],
+            where: { available: true },
+            includeIgnoreAttributes: false
+        })
+        .then(function(food) {
+            if (food.length) {
+                return res.send(food);
+            }
+            return res.send({
+                message: "Could not find any available food."
+            });
+        })
+        .catch(error => res.status(400).send(error))
+}
+
+export function setAvailableFood(req, res) {
+
+    return db.Food
+        .findById(req.params.idFood)
+        .then(function(foodItem) {
+            if (foodItem) {
+                return foodItem
+                    .update({
+                        available: false
+                    })
+                    .then(() => res.status(200).send(foodItem))
+                    .catch(error => res.status(400).send(error));
+            }
+
+            return res.send({
+                message: "Could not find specified food."
+            });
+        })
+        .catch(error => res.status(400).send(error))
 }
 
 export function deleteFood(req, res) {
@@ -79,7 +123,7 @@ export function deleteFood(req, res) {
 
             return foodItem
                 .destroy()
-                .then(() => res.status(204).send(foodItem))
+                .then(() => res.status(200).send(foodItem))
                 .catch(error => res.status(400).send(error));
         })
         .catch(error => res.status(400).send(error));

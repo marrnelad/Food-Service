@@ -4,20 +4,19 @@ export function getSuppliers(req, res) {
 
     return db.Supplier
         .findAll()
-        .then(function(suppliers) {
-            if (suppliers.length) {
+        .then((suppliers) => {
+            if (suppliers.length > 0) {
                 return res.send(suppliers);
             }
             return res.send({
                 message: "Could not find any supplier."
             });
         })
-        .catch(function(error) {
-            console.log(error);
-            return res.send({
+        .catch(error =>
+            res.send({
                 message: "Error retrieving suppliers."
-            });
-        });
+            })
+        );
 }
 
 export function createSupplier(req, res) {
@@ -28,14 +27,14 @@ export function createSupplier(req, res) {
             address: req.body.address,
             phone: req.body.phone
         })
-        .save()
-        .then(supplier => {
-            res.send(supplier);
-        })
+        .then(supplier =>
+            res.send(supplier)
+        )
         .catch(error => {
             message: "Could not create supplier."
         });
 }
+
 export function deleteSupplier(req, res) {
 
     return db.Supplier
@@ -49,7 +48,7 @@ export function deleteSupplier(req, res) {
 
             return supplier
                 .destroy()
-                .then(() => res.status(204).send(supplier))
+                .then(() => res.status(200).send(supplier))
                 .catch(error => res.status(400).send(error));
         })
         .catch(error => res.status(400).send(error));
