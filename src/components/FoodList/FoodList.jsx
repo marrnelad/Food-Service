@@ -1,9 +1,9 @@
 import React from 'react';
 import FoodItem from '../FoodItem/FoodItem.jsx';
 import './FoodList.css';
-import {bindActionCreators} from 'redux';
 import { connect } from 'react-redux'
-import getSuppliersFoods from '../../actions/foodsAction';
+import {getSuppliersFoods} from '../../actions/foodsAction';
+import { PulseLoader } from 'react-spinners';
 
 class FoodList extends React.Component {
     constructor(props) {
@@ -13,42 +13,42 @@ class FoodList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getSuppliersFoods();
-
+        this.props.dispatch(getSuppliersFoods(this.props.match.params.uuid));
     }
 
-    render() {
-        let {foods} = this.props;
-        let foodsContainer;
-        foods.length > 0
-            ? foodsContainer = foods.map((food, index) =>
-                <FoodItem
-                    title={food.title}
-                    description={food.description}
-                    available={food.available}
-                    price={food.price}
-                    photo={food.photo}
-                    uuid={food.uuid}
-                    key={index}
-                />)
-            : foodsContainer =  <h5 className="card-title">Sorry, this supplier haven't any food yet</h5>;
+  render() {
+      let {food, foodItems} = this.props;
+       let foodItem = !food.isLoaded
+          ?  <PulseLoader
+               color={'#252525'}
+               loading={!food.isLoaded}
+           /> : foodItems.length > 0 ?
+           foodItems.map((food) =>
+              <FoodItem
+                  title={food.title}
+                  description={food.description}
+                  available={food.available}
+                  price={food.price}
+                  photo={food.photo}
+                  idSupplier={food.FoodAndSupplier.idSupplier}
+                  uuid={food.uuid}
+                  key={food.uuid}
+              />)
+          :  <h5 className="card-title">У данного поставщика ещё нет доступных продуктов</h5>;
 
-        return (
-            <div className="blocks">
-                {foodsContainer}
-            </div>
-        );
-    }
+    return (
+        <div className={food.isLoaded ? "blocks" : "spinner"}>
+            {foodItem}
+        </div>
+    );
+  }
 }
 function mapStateToProps (state) {
     return {
-        foods: state.foods,
+        foodItems: state.foods.food,
+        food: state.foods
     }
 }
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        getSuppliersFoods: getSuppliersFoods
-    }, dispatch);
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FoodList)
+export default connect(mapStateToProps)(FoodList)
+

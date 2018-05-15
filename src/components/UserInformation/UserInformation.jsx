@@ -1,7 +1,6 @@
 import React from 'react';
 import './UserInformation.css';
 import { connect } from 'react-redux'
-import {toggleUserModal} from "../../actions/userAction";
 
 class UserInformation extends React.Component {
     constructor(props) {
@@ -9,38 +8,43 @@ class UserInformation extends React.Component {
         this.state = {
         };
     }
-    componentDidMount() {
-        this.props.dispatch(toggleUserModal());
-    }
+
     render() {
-        let {name, email,phone} = this.props.userInfo;
+
         return (
             <div className="jumbotron user-info">
-                <h1 className="display-6 user-info-header">User information</h1>
-                <table className="table table-hover user-info-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{name}</td>
-                        <td>{email}</td>
-                        <td>{phone}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+                {this.props.user.isAuthenticated
+                    ? <div>
+                        <h1 className="display-6 user-info-header">Личные данные</h1>
+                        <table className="table table-hover user-info-table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Имя</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Телефон</th>
+                                <th scope="col">Адрес</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{this.props.user.info.name}</td>
+                                <td>{this.props.user.info.email}</td>
+                                <td>{this.props.user.info.phone}</td>
+                                <td>{this.props.user.info.address}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    : <h3 className="display-6 user-info-header">Для начала Вы должны войти в систему</h3>}
+                    </div>
         );
     }
 }
 function mapStateToProps (state) {
     return {
-        userInfo: state.user.info,
+        user: state.user,
     }
 }
 
 export default connect(mapStateToProps)(UserInformation)
+

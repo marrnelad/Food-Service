@@ -1,6 +1,9 @@
 import React from 'react';
 import './CartItem.css';
-import { removeItem, updateQuantity } from '../../actions/cartAction';
+import {
+    removeItem,
+    updateQuantity
+} from '../../actions/cartAction';
 import { connect } from 'react-redux';
 
 class CartItem extends React.Component {
@@ -9,11 +12,6 @@ class CartItem extends React.Component {
         this.state = {
         }
     }
-
-    removeFromCart(uuid) {
-        this.props.dispatch(removeItem(uuid));
-    }
-
 
     updateItemQuantity = (change) => {
         let { quantity,uuid } = this.props;
@@ -36,33 +34,27 @@ class CartItem extends React.Component {
 
 
         return (
-            <div className="cart-item">
-                <button  onClick={() => {this.removeFromCart(uuid)}} type="button" className="close" aria-label="Delete">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <div className="item-image">
-                    <img src={photo} alt="" />
-                </div>
-                <div className="description">
-                    <span>{title}</span>
-                </div>
 
-                <div className="item-quantity">
-                    <button onClick={() => { this.updateItemQuantity('decrement') }} className="minus-btn" type="button" name="button">-</button>
-                    <span>{quantity}</span>
-                    <button onClick={() => { this.updateItemQuantity('increment') }} className="plus-btn" type="button" name="button">+</button>
-
-                </div>
-                <div className="total-price">{price*quantity}$</div>
-            </div>
+                <tr>
+                    <th scope="row">
+                        <button  onClick={() => {this.props.dispatch(removeItem(uuid))}} type="button" className="close" aria-label="Delete">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </th>
+                    <td className="item-image"> <img src={photo} alt="" /></td>
+                    <td>{title}</td>
+                    <td>
+                        <button onClick={() => { this.updateItemQuantity('decrement') }} type="button" className="btn btn-outline-secondary btn-minus">-</button>
+                        <span className="item-quantity">{quantity}</span>
+                        <button onClick={() => { this.updateItemQuantity('increment') }} type="button" className="btn btn-outline-secondary btn-plus">+</button>
+                    </td>
+                    <td>
+                        {price*quantity}$
+                    </td>
+                </tr>
         );
     }
 }
-function mapStateToProps (state) {
-    return {
-        // itemsInStore: state.cart
-    }
-}
 
 
-export default connect(mapStateToProps)(CartItem)
+export default connect()(CartItem)
