@@ -6,10 +6,6 @@ export default (sequelize, DataTypes) => {
             allowNull: false,
             primaryKey: true
         },
-        isAdmin: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -25,7 +21,10 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        token: {
+        role: {
+            type: DataTypes.STRING,
+        },
+        address: {
             type: DataTypes.STRING,
         },
     });
