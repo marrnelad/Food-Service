@@ -1,0 +1,11 @@
+.user-info {
+    width: 100%;
+    margin-right: 5%;
+}
+.user-info-header {
+    text-align: center;
+    padding-bottom: 20px;
+}
+.user-info-table {
+    width: 97%;
+}
