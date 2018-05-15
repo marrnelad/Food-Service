@@ -25,6 +25,7 @@ class CartItem extends React.Component {
             }
             case 'decrement': {
                 quantity = quantity - 1;
+                break;
             }
         }
         let updatedItemParams = {quantity,uuid };

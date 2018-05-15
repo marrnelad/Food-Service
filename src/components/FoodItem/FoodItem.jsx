@@ -8,7 +8,7 @@ class FoodItem extends React.Component {
         super(props);
     }
 
-    _addToCart = (price, description, title, quantity,photo,uuid) => {
+    addItemToCart = (price, description, title, quantity,photo,uuid) => {
         const itemDetails = {
             title: title,
             quantity: quantity,
@@ -17,10 +17,6 @@ class FoodItem extends React.Component {
             photo: photo,
             uuid:uuid,
         };
-        // this.setState({
-        //     quantity: 1
-        // });
-
         this.props.dispatch(addToCart(itemDetails));
     };
 
@@ -32,15 +28,14 @@ class FoodItem extends React.Component {
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
                     <small className="card-subtitle text-muted">{description}</small> <br/>
-                    <small className="card-subtitle text-muted">{available ?
-                        "In stock"
-                        : "Out of stock"}
+                    <small className="card-subtitle text-muted">
+                        {available ? "In stock" : "Out of stock"}
                     </small>
                 </div>
                 <img className="block__img"  src={photo} alt="Food item"/>
                 <div className="card-body block-footer">
                     <small className="card-subtitle text-muted food-price">{price}$</small>
-                    <button onClick={() => { this._addToCart(price, description, title, 1, photo,uuid) }} disabled={!available} className="btn btn-outline-primary btn-sm">Add to cart</button>
+                    <button onClick={() => { this.addItemToCart(price, description, title, 1, photo,uuid) }} disabled={!available} className="btn btn-outline-primary btn-sm">Add to cart</button>
                 </div>
             </div>
         );
@@ -49,7 +44,7 @@ class FoodItem extends React.Component {
 
 function mapStateToProps (state) {
     return {
-        // catalog: state.cart
+
     }
 }
 
