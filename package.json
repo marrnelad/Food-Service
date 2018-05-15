@@ -5,6 +5,7 @@
   "proxy": "http://localhost:5500/",
   "dependencies": {
     "axios": "^0.17.1",
+    "bcrypt": "^2.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.2",
     "celebrate": "^7.0.6",
@@ -27,6 +28,7 @@
     "react-router-redux": "^4.0.8",
     "react-scripts": "1.1.0",
     "react-spinners": "^0.3.2",
+    "read-excel-file": "^1.2.8",
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-thunk": "^2.2.0",
