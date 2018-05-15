@@ -1,0 +1,31 @@
+.user-orders__header {
+    display: flex;
+    justify-content: space-between;
+}
+.user-orders__header .btn {
+   height: 32px;
+}
+.dropdown {
+    cursor: pointer;
+}
+.dropdown:hover {
+    color: #1a1a1a;
+}
+.nav-link {
+    padding: 0!important;
+}
+.search-input {
+    margin-bottom: 10px;
+}
+.btn-admin {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.supplier-separator {
+    border-right: 1px solid #eaeaec;
+}
+@media print {
+  .header, .footer, .user-orders__header {
+       display: none;
+   }
+}

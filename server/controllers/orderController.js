@@ -7,9 +7,10 @@ export function getAllOrders(req, res) {
         .findAll({
             include: [
                 {model: db.Food},
-                {model: db.User}
+                {model: db.User},
+                {model: db.Supplier},
             ],
-            order: [['orderDate', 'DESC'],[db.User,'name']],
+            order: [['createdAt', 'DESC'],[db.User,'name']],
         })
         .then(function(orders) {
             if (orders) {
@@ -33,9 +34,10 @@ export function getAllOrdersForToday(req, res) {
             },
             include: [
                 {model: db.Food},
-                {model: db.User}
+                {model: db.User},
+                {model: db.Supplier},
             ],
-            order: [['orderDate', 'DESC'],[db.User,'name']],
+            order: [['createdAt', 'DESC'],[db.User,'name']],
         })
         .then(function(orders) {
             if (orders) {
@@ -50,7 +52,6 @@ export function getAllOrdersForToday(req, res) {
         });
 }
 export function getAllOrdersForWeek(req, res) {
-
     return db.UserAndOrder
         .findAll({
             where: {
@@ -60,9 +61,10 @@ export function getAllOrdersForWeek(req, res) {
             },
             include: [
                 {model: db.Food},
-                {model: db.User}
+                {model: db.User},
+                {model: db.Supplier},
             ],
-            order: [['orderDate', 'DESC'],[db.User,'name']],
+            order: [['createdAt', 'DESC'],[db.User,'name']],
         })
         .then(function(orders) {
             if (orders) {
@@ -79,26 +81,27 @@ export function getAllOrdersForWeek(req, res) {
 export function getUserOrders(req, res) {
 
     return db.UserAndOrder
-        .findAll({
-            where: {
-                idUser: req.params.idUser,
-            },
-            include: [{
-                model: db.Food
-            }],
-            order: [['createdAt', 'DESC']],
-        })
-        .then(function(orders) {
-            if (orders) {
-                return res.status(200).send(orders);
-            }
-            return res.send({
-                message: "This user has no orders made."
-            });
-        })
-        .catch(error => {
-            return res.send(error);
-        });
+    .findAll({
+      where: {
+        idUser: req.params.idUser,
+      },
+      include: [
+          {model: db.Food},
+          {model: db.Supplier},
+          ],
+        order: [['createdAt', 'DESC']],
+    })
+    .then(function(orders) {
+      if (orders) {
+        return res.status(200).send(orders);
+      }
+      return res.send({
+        message: "This user has no orders made."
+      });
+    })
+    .catch(error => {
+      return res.send(error);
+    });
 }
 export function getUserOrdersForToday(req, res) {
 
@@ -108,9 +111,10 @@ export function getUserOrdersForToday(req, res) {
                 idUser: req.params.idUser,
                 orderDate:  new Date()
             },
-            include: [{
-                model: db.Food
-            }],
+            include: [
+                {model: db.Food},
+                {model: db.Supplier},
+            ],
             order: [['createdAt', 'DESC']],
         })
         .then(function(orders) {
@@ -135,9 +139,10 @@ export function getUserOrdersForWeek(req, res) {
                     [Op.between]: [new Date(new Date() - 7*24 * 60 * 60 * 1000), new Date()]
                 }
             },
-            include: [{
-                model: db.Food
-            }],
+            include: [
+                {model: db.Food},
+                {model: db.Supplier},
+            ],
             order: [['createdAt', 'DESC']],
         })
         .then(function(orders) {
@@ -154,43 +159,45 @@ export function getUserOrdersForWeek(req, res) {
 }
 export function createOrder(req, res) {
 
-    req.body.forEach((orderItem) => {
-        return db.UserAndOrder
-            .create({
-                idUser: orderItem.idUser,
-                idFood: orderItem.idFood,
-                orderDate: orderItem.orderDate,
-                count: orderItem.count,
-                price: orderItem.price,
-            })
-            .then( (orderItem) => {
-                if (!orderItem) {
-                    return res.status(400).send({
-                        message: 'Could not create order item.'
-                    });
-                }
+req.body.forEach((orderItem) => {
+    return db.UserAndOrder
+      .create({
+          idUser: orderItem.idUser,
+          idFood: orderItem.idFood,
+          idSupplier: orderItem.idSupplier,
+          orderDate: orderItem.orderDate,
+          count: orderItem.count,
+          price: orderItem.price,
+          shippingAddress: orderItem.shippingAddress,
+      })
+      .then( (orderItem) => {
+        if (!orderItem) {
+          return res.status(400).send({
+            message: 'Could not create order item.'
+          });
+        }
 
-                return res.status(200).send(req.body);
-            })
-            .catch(error => res.status(404).send(error));
-    });
+        return res.status(200).send(req.body);
+      })
+      .catch(error => res.status(404).send(error));
+  });
 }
 
 export function deleteOrder(req, res) {
 
-    return db.UserAndOrder
-        .findAll({
-            where: {
-                idUser: req.params.idUser,//uuid: req.params.uuid
-                orderDate: req.body.orderDate,
-            }
-        })
-        .then(orders => {
-            orders.forEach((orderItem) => {
-                orderItem
-                    .destroy()
-                    .then(() => res.status(200))
-            })
-        })
-        .catch(error => res.status(400).send(error));
+  return db.UserAndOrder
+    .findAll({
+      where: {
+        idUser: req.params.idUser,
+        orderDate: req.body.orderDate,
+      }
+    })
+    .then(orders => {
+       orders.forEach((orderItem) => {
+         orderItem
+           .destroy()
+           .then(() => res.status(200))
+       })
+    })
+    .catch(error => res.status(400).send(error));
 }
