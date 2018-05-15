@@ -1,0 +1,14 @@
+.user-modal {
+    top: 65px!important;
+    width: 300px;
+}
+.user-modal a {
+    padding-left: 10px;
+    padding-top: 10px;
+}
+.user-modal a:hover {
+    color: #6e6e6e !important;
+}
+.modal-footer {
+    justify-content: space-between!important;
+}
