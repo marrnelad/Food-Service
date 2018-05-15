@@ -17,4 +17,8 @@ apiRouter.post('/suppliers', suppliersController.createSupplier);
 
 apiRouter.get('/suppliers/:idSupplier', foodController.getSuppliersFood);
 
-module.exports = apiRouter;
+apiRouter.post('/suppliers/:idSupplier/food', foodController.createFood);
+
+apiRouter.get('/suppliers/:idSupplier/food', foodController.getSuppliersFood);
+
+export default apiRouter;
