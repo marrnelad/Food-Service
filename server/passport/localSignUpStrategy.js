@@ -8,15 +8,14 @@ export default new PassportLocalStrategy({
     session: false,
     passReqToCallback: true
 }, (req, email, password, done) => {
-    const { isAdmin, name, phone } = req.body;
+    const { name, phone, address } = req.body;
     const userData = {
-        isAdmin,
         name: name.trim(),
         phone: phone.trim(),
         email: email.trim(),
-        password: password.trim()
+        password: password.trim(),
+        address: address.trim(),
     };
-
     db.User
         .findOne({
             where: {
@@ -32,8 +31,7 @@ export default new PassportLocalStrategy({
             }
 
             return done({
-                error:
-                    'That email is already taken.'
+                error: 'That email is already taken.'
             })
         })
         .catch(error => done(error));
