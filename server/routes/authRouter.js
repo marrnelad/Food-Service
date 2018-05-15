@@ -9,10 +9,10 @@ const authRouter = new express.Router();
 
 const SignUpSchema = Joi.object().keys({
     name: Joi.string().alphanum().min(2).max(30),
-    phone: Joi.string(),
-    isAdmin: Joi.boolean(),
+    phone: Joi.string().required(),
     password: Joi.string().regex(/^[a-zA-Z0-9]{6,30}$/).required(),
-    email: Joi.string().email().required()
+    email: Joi.string().email().required(),
+    address:Joi.string().required(),
 });
 
 const SignInSchema = Joi.object().keys({
@@ -25,13 +25,12 @@ authRouter.post('/signup', celebrate({
     }), (req, res, next) => passport.authenticate('localSignUp', (err,user) => {
         if (err) {
             return res.status(400).json({
-                // errorMessage: 'Oops, something goes wrong.'
                 success: false
             });
         }
         let token = jwt.sign({
             uuid: user.uuid,
-            name: user.name
+            name: user.name,
         }, config.jwtSecret);
         return res.status(200).json({
             success: true,
@@ -53,6 +52,8 @@ authRouter.post('/signin', celebrate({
             name: user.name,
             email: user.email,
             phone: user.phone,
+            address: user.address,
+            role: user.role,
         }, config.jwtSecret);
         return res.status(200).json({
             success: true,

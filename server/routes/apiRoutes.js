@@ -22,7 +22,17 @@ apiRouter.put('/food/:idFood', foodController.setAvailableFood);
 
 apiRouter.delete('/food/:idFood', foodController.deleteFood);
 
+apiRouter.get('/admin/userOrders', orderController.getAllOrders);
+
+apiRouter.get('/admin/userOrders/today', orderController.getAllOrdersForToday);
+
+apiRouter.get('/admin/userOrders/week', orderController.getAllOrdersForWeek);
+
 apiRouter.get('/users/:idUser/orders', orderController.getUserOrders);
+
+apiRouter.get('/users/:idUser/orders/today', orderController.getUserOrdersForToday);
+
+apiRouter.get('/users/:idUser/orders/week', orderController.getUserOrdersForWeek);
 
 apiRouter.post('/users/:idUser/orders', orderController.createOrder);
 
