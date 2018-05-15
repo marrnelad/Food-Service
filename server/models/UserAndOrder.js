@@ -15,13 +15,13 @@ export default (sequelize, DataTypes) => {
             allowNull: false
         },
         orderDate: {
-            type: DataTypes.DATE,
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         count: {
             type: DataTypes.INTEGER,
             allowNull: false,
-        }
+        },
     });
 
     UserAndOrder.associate = function(models) {
