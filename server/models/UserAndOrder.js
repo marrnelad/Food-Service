@@ -24,5 +24,10 @@ export default (sequelize, DataTypes) => {
         }
     });
 
+    UserAndOrder.associate = function(models) {
+        UserAndOrder.belongsTo(models.Food, {foreignKey: 'idFood'});
+        UserAndOrder.belongsTo(models.User, {foreignKey: 'idUser'});
+    };
+
     return UserAndOrder;
 };

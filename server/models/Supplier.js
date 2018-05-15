@@ -1,4 +1,5 @@
 export default (sequelize, DataTypes) => {
+
     const Supplier = sequelize.define('Supplier', {
         uuid: {
             type: DataTypes.UUID,
@@ -16,6 +17,9 @@ export default (sequelize, DataTypes) => {
         },
         phone: {
             type: DataTypes.STRING,
+        },
+        photo: {
+            type:DataTypes.STRING,
         }
     });
 

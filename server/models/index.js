@@ -32,10 +32,4 @@ Object.keys(db).forEach(modelName => {
 
 db.sequelize = sequelize;
 
-db.user = require('./User.js')(sequelize, Sequelize);
-db.food = require('./Food.js')(sequelize, Sequelize);
-db.supplier = require('./Supplier.js')(sequelize, Sequelize);
-db.userAndOrder = require('./UserAndOrder.js')(sequelize, Sequelize);
-db.foodAndSupplier = require('./FoodAndSupplier.js')(sequelize, Sequelize);
-
 module.exports = db;

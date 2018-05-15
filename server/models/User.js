@@ -30,5 +30,9 @@ export default (sequelize, DataTypes) => {
         },
     });
 
+    User.associate = function(models) {
+        User.hasMany(models.UserAndOrder, {foreignKey: 'idUser', onDelete: 'CASCADE'});
+    };
+
     return User;
 };
