@@ -1,17 +1,17 @@
-.cart-item {
-    display: flex;
-    padding: 1rem;
-}
 .item-image img {
     width: 40px;
     height: 40px;
 }
-.item-quantity  input {
-    -webkit-appearance: none;
-    border: none;
-    text-align: center;
-    width: 32px;
-    font-size: 16px;
-    color: #43484D;
-    font-weight: 300;
+.minus-btn, .plus-btn {
+    width: 30px;
+    height: 30px;
 }
+.btn-outline-secondary {
+    padding: 0!important;
+    width: 30px;
+    height: 20px;
+}
+.item-quantity {
+    padding: 5px;
+}
+

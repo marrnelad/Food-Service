@@ -1,12 +1,19 @@
 .blocks__item {
-    margin-right: 5px;
-    flex: 1 1 50%;
-    max-width: 32%;
+  margin-right: 5px;
+  flex: 1 1 50%;
+  max-width: 32%;
 }
 
 .block-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
+
+
+
+
+
+
 

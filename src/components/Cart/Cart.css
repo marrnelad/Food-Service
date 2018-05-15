@@ -1,3 +1,15 @@
-.cart-aside {
-    flex: 1 1 25%;
+.cart {
+  top: 65px!important;
+  width: 25%;
+  min-width:300px!important;
+}
+.table th, .table td {
+  padding: 0.5rem!important;
+}
+.modal-footer {
+  justify-content: space-between!important;
+}
+
+.card-title{
+  margin-left: 15px;
 }

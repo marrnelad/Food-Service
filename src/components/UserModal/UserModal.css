@@ -12,3 +12,7 @@
 .modal-footer {
     justify-content: space-between!important;
 }
+.modal-footer a {
+    color: #1a1a1a!important;
+    cursor: pointer;
+}

@@ -20,6 +20,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .header__btn-cart {
@@ -27,8 +28,27 @@
   width: 30px;
   height: 30px;
   border: none;
-  background: none;
+  background-color: #ffffff;
   background-image: url('../../static/images/cart.svg');
   background-repeat: no-repeat;
   background-size: contain;
+  cursor: pointer;
+  outline: none!important;
+}
+.header__btn-user {
+  margin-right: 20px;
+  margin-left: 20px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  background-color: #ffffff;
+  background-image: url('../../static/images/user.svg');
+  cursor: pointer;
+  outline: none!important;
+}
+.header__num-of-items {
+  color: #ffffff;
+  font-size: 12px;
+  vertical-align: 8px;
+  padding-left: 4px;
 }
