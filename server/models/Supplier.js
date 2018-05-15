@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
     const Supplier = sequelize.define('Supplier', {
-        id: {
+        uuid: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
@@ -18,6 +18,10 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.STRING,
         }
     });
+
+    Supplier.associate = function(models) {
+        Supplier.hasMany(models.FoodAndSupplier, {foreignKey: 'idSupplier', onDelete: 'CASCADE'});
+    };
 
     return Supplier;
 };

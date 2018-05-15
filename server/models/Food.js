@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
     const Food = sequelize.define('Food', {
-        id: {
+        uuid: {
             type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,

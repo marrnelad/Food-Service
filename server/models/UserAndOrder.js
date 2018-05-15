@@ -1,9 +1,6 @@
-import User from './User.js';
-import Food from './Food.js';
-
 export default (sequelize, DataTypes) => {
     const UserAndOrder = sequelize.define('UserAndOrder', {
-        id: {
+        uuid: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
@@ -11,19 +8,11 @@ export default (sequelize, DataTypes) => {
         },
         idUser: {
             type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: User,
-                key: 'id',
-            }
+            allowNull: false
         },
         idFood: {
             type: DataTypes.UUID,
-            allowNull: false,
-            references: {
-                model: Food,
-                key: 'id',
-            }
+            allowNull: false
         },
         orderDate: {
             type: DataTypes.DATE,

@@ -1,6 +1,6 @@
 export default (sequelize, DataTypes) => {
     const User = sequelize.define('User', {
-        id: {
+        uuid: {
             type: DataTypes.UUID,
             defaultValue: DataTypes.UUIDV4,
             allowNull: false,
